@@ -17,15 +17,15 @@ def getPort():
     # return "/dev/ttyUSB1"
 
 portName = "/dev/ttyUSB1"
-print(portName)
+print(getPort())
 
 
 
-try:
-    ser = serial.Serial(port=portName, baudrate=115200)
-    print("Open successfully")
-except:
-    print("Can not open the port")
+# try:
+#     ser = serial.Serial(port=portName, baudrate=115200)
+#     print("Open successfully")
+# except:
+#     print("Can not open the port")
 
 relay1_ON  = [0, 6, 0, 0, 0, 255, 200, 91]
 relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
@@ -38,11 +38,11 @@ def setDevice1(state):
     time.sleep(1)
     print(serial_read_data(ser))
 
-while True:
-    setDevice1(True)
-    time.sleep(2)
-    setDevice1(False)
-    time.sleep(2)
+# while True:
+#     setDevice1(True)
+#     time.sleep(5)
+#     setDevice1(False)
+#     time.sleep(5)
 
 
 def serial_read_data(ser):
@@ -73,9 +73,12 @@ def readMoisture():
     time.sleep(1)
     return serial_read_data(ser)
 
-while True:
-    print("TEST SENSOR")
-    print(readMoisture())
-    time.sleep(1)
-    print(readTemperature())
-    time.sleep(1)
+# while True:
+    # print("TEST SENSOR")
+    # print(readMoisture())
+    # time.sleep(1)
+    # print(readTemperature())
+    # time.sleep(1)
+    # setDevice1(True)
+    # time.sleep(2)
+    # setDevice1(False)
