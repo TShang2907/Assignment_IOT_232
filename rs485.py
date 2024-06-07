@@ -16,19 +16,44 @@ def getPort():
     return commPort
     # return "/dev/ttyUSB1"
 
-portName = "/dev/ttyUSB1"
+portName = "/dev/ttyUSB0"
 print(getPort())
 
 
 
-# try:
-#     ser = serial.Serial(port=portName, baudrate=115200)
-#     print("Open successfully")
-# except:
-#     print("Can not open the port")
+try:
+    ser = serial.Serial(port=portName, baudrate=115200)
+    print("Open successfully")
+except:
+    print("Can not open the port")
 
-relay1_ON  = [0, 6, 0, 0, 0, 255, 200, 91]
-relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
+# relay1_ON  = [0, 6, 0, 0, 0, 255, 200, 91]
+# relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
+
+relay1_ON  = [1, 6, 0, 0, 0, 255, 201, 138]
+relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
+
+relay2_ON  = [2, 6, 0, 0, 0, 255, 201, 185]
+relay2_OFF = [2, 6, 0, 0, 0, 0, 137, 249]
+
+relay3_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
+relay3_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
+
+relay4_ON  = [4, 6, 0, 0, 0, 255, 201, 223]
+relay4_OFF = [4, 6, 0, 0, 0, 0, 137, 159]
+
+relay5_ON  = [5, 6, 0, 0, 0, 255, 200, 14]
+relay5_OFF = [5, 6, 0, 0, 0, 0, 136, 78]
+
+relay6_ON  = [6, 6, 0, 0, 0, 255, 200, 61]
+relay6_OFF = [6, 6, 0, 0, 0, 0, 136, 125]
+
+relay7_ON  = [7, 6, 0, 0, 0, 255, 201, 236]
+relay7_OFF = [7, 6, 0, 0, 0, 0, 137, 172]
+
+relay8_ON  = [8, 6, 0, 0, 0, 255, 201, 19]
+relay8_OFF = [8, 6, 0, 0, 0, 0, 137, 83]
+
 
 def setDevice1(state):
     if state == True:
@@ -37,12 +62,6 @@ def setDevice1(state):
         ser.write(relay1_OFF)
     time.sleep(1)
     print(serial_read_data(ser))
-
-# while True:
-#     setDevice1(True)
-#     time.sleep(5)
-#     setDevice1(False)
-#     time.sleep(5)
 
 
 def serial_read_data(ser):
@@ -73,12 +92,13 @@ def readMoisture():
     time.sleep(1)
     return serial_read_data(ser)
 
-# while True:
+while True:
     # print("TEST SENSOR")
     # print(readMoisture())
     # time.sleep(1)
     # print(readTemperature())
     # time.sleep(1)
-    # setDevice1(True)
-    # time.sleep(2)
-    # setDevice1(False)
+    setDevice1(True)
+    time.sleep(5)
+    setDevice1(False)
+    time.sleep(5)
