@@ -76,6 +76,7 @@ def serial_read_data(ser):
             return value
         else:
             return -1
+    
     return 0
 
 soil_temperature =[1, 3, 0, 6, 0, 1, 100, 11]
@@ -93,12 +94,12 @@ def readMoisture():
     return serial_read_data(ser)
 
 while True:
-    # print("TEST SENSOR")
-    # print(readMoisture())
-    # time.sleep(1)
-    # print(readTemperature())
-    # time.sleep(1)
-    setDevice1(True)
-    time.sleep(5)
-    setDevice1(False)
-    time.sleep(5)
+    print("TEST SENSOR")
+    print(readMoisture())
+    time.sleep(2)
+    print(readTemperature())
+    time.sleep(2)
+    # setDevice1(True)
+    # time.sleep(5)
+    # setDevice1(False)
+    # time.sleep(5)
