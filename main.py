@@ -35,13 +35,11 @@ time.sleep(2)
 # time.sleep(2)
 
 while True:
-    m485.modbus485_send(soil_temperature)
-    time.sleep(2)
+    m485.modbus485_send(relay1_ON)
     m485.modbus485_read_adc()
-    time.sleep(2)
-    m485.modbus485_send(soil_moisture)
-    time.sleep(2)
+    time.sleep(5)
+    m485.modbus485_send(relay1_OFF)
     m485.modbus485_read_adc()
-    time.sleep(2)
+    time.sleep(5)
 
 
