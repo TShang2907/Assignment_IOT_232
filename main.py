@@ -36,9 +36,11 @@ time.sleep(2)
 
 while True:
     m485.modbus485_send(relay1_ON)
+    time.sleep(1)
     m485.modbus485_read_adc()
     time.sleep(5)
     m485.modbus485_send(relay1_OFF)
+    time.sleep(1)
     m485.modbus485_read_adc()
     time.sleep(5)
 
