@@ -18,19 +18,30 @@ relay2_OFF = [2, 6, 0, 0, 0, 0, 137, 249]
 relay3_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
 relay3_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
 
+soil_temperature =[1, 3, 0, 6, 0, 1, 100, 11]
+soil_moisture = [1, 3, 0, 7, 0, 1, 53, 203]
+
 m485.modbus485_send(relay1_ON)
 time.sleep(2)
-m485.modbus485_send(relay1_OFF)
-time.sleep(2)
-m485.modbus485_send(relay2_ON)
-time.sleep(2)
-m485.modbus485_send(relay2_OFF)
-time.sleep(2)
-m485.modbus485_send(relay3_ON)
-time.sleep(2)
-m485.modbus485_send(relay3_OFF)
-time.sleep(2)
+# m485.modbus485_send(relay1_OFF)
+# time.sleep(2)
+# m485.modbus485_send(relay2_ON)
+# time.sleep(2)
+# m485.modbus485_send(relay2_OFF)
+# time.sleep(2)
+# m485.modbus485_send(relay3_ON)
+# time.sleep(2)
+# m485.modbus485_send(relay3_OFF)
+# time.sleep(2)
 
 while True:
+    m485.modbus485_send(soil_temperature)
+    time.sleep(2)
     m485.modbus485_read_adc()
+    time.sleep(2)
+    m485.modbus485_send(soil_moisture)
+    time.sleep(2)
+    m485.modbus485_read_adc()
+    time.sleep(2)
+
 
