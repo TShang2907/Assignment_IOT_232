@@ -19,12 +19,13 @@ relay3_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
 relay3_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
 
 m485.modbus485_send(relay2_ON)
-time.sleep(3)
+time.sleep(2)
 m485.modbus485_send(relay2_OFF)
-# time.sleep(2)
-# m485.modbus485_send(relay2_ON)
-# time.sleep(2)
-# m485.modbus485_send(relay2_OFF)
-# time.sleep(2)
-
+time.sleep(2)
+m485.modbus485_send(relay2_ON)
+time.sleep(2)
+m485.modbus485_send(relay2_OFF)
+time.sleep(2)
+while True:
+    m485.modbus485_read_adc()
 
