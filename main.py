@@ -19,7 +19,7 @@ relay3_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
 relay3_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
 
 soil_temperature =[10, 3, 0, 6, 0, 1, 101, 112]
-soil_moisture = [10, 3, 0, 18, 0, 2, 101, 117]
+soil_moisture = [10, 3, 0, 21, 0, 1, 148, 181]
 
 # m485.modbus485_send(relay1_ON)
 # time.sleep(2)
