@@ -13,17 +13,8 @@ class MQTTHelper:
     MQTT_USERNAME = "innovation"
     MQTT_PASSWORD = "Innovation_RgPQAZoA5N"
 
-    # MQTT_USERNAME = "servermonitoring"
-    # MQTT_PASSWORD = "ServerMonitoring_wQ1Z3Q5n64"
-
-    MQTT_TOPIC_PUB = "/innovation/soilmonitoring"
-    MQTT_TOPIC_SUB_SOIL = "/innovation/soilmonitoring/"
-    MQTT_TOPIC_SUB_WATER = "/innovation/watermonitoring/"
-    MQTT_TOPIC_SUB_AIR = "/innovation/airmonitoring/smarthome"
-    MQTT_TOPIC_SUB_VALVE = "/innovation/valvecontroller/"
-    MQTT_TOPIC_SUB_PUMP = "/innovation/pumpcontroller/"
-    MQTT_TOPIC_SMART_HOME = "/innovation/smarthome"
-    MQTT_TOPIC_SERVER = "/server/monitoring/"
+    MQTT_TOPIC_SUB_VALVE = "/innovation/valvecontroller/station1"
+    MQTT_TOPIC_SUB_PUMP = "/innovation/pumpcontroller/station1"
     MQTT_TOPIC_AI="/innovation/valvecontroller/ai"
     recvCallBack = None
 
@@ -37,6 +28,7 @@ class MQTTHelper:
         #client.subscribe(self.MQTT_TOPIC_SERVER)
 
         client.subscribe(self.MQTT_TOPIC_AI)
+
         #client.subscribe(self.MQTT_TOPIC_SUB_PUMP)
 
         
