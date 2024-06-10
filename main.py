@@ -6,7 +6,7 @@ import json
 from Scheduler.scheduler import  *
 from datetime import datetime,timedelta
 
-RS485
+#RS485
 try:
     ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
 except:
@@ -238,6 +238,3 @@ while True:
     # time.sleep(1)
     # m485.modbus485_read_adc()
     # time.sleep(1)
-
-    # mqtt.publish(MQTT_TOPIC_SENSOR,"hello")
-    # time.sleep(5)
