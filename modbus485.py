@@ -31,7 +31,8 @@ class Modbus485:
         if bytesToRead > 0:
             out = ser.read(bytesToRead)
             data_array = [b for b in out]
-            print(data_array)
+            print("Returned data: ",data_array)
+            print("\n")
             if len(data_array) >= 7:
                 array_size = len(data_array)
                 value = data_array[array_size - 4] * 256 + data_array[array_size - 3]
