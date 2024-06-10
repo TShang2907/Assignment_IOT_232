@@ -49,7 +49,7 @@ mqtt=MQTTHelper()
 # Định nghĩa một hàm xử lý để nhận các thông điệp từ máy chủ MQTT
 def receive_callback(message):
     json_data = json.loads(message.payload.decode("utf-8"))
-    print("Received: ",json_data )
+    print("Received from server: ",message.topic )
     
     if message.topic=="/innovation/valvecontroller/station1":
         index=0
@@ -67,6 +67,7 @@ def receive_callback(message):
                     m485.modbus485_send(relay_OFF[index])
                     time.sleep(1)
                     m485.modbus485_read_adc()
+                valve_value[index]=sensor["sensor_value"]
             index=index+1
         
     if message.topic=="/innovation/pumpcontroller/station1":
@@ -85,6 +86,7 @@ def receive_callback(message):
                     m485.modbus485_send(relay_OFF[index])
                     time.sleep(1)
                     m485.modbus485_read_adc()
+                pump_value[index-3]=sensor["sensor_value"]
             index=index+1
 
 # Gọi phương thức setRecvCallBack để gán hàm xử lý cho việc nhận thông điệp
@@ -102,4 +104,5 @@ while True:
     # m485.modbus485_read_adc()
     # time.sleep(1)
 
-    #mqtt.publish(MQTT_TOPIC_AI,"hello")
+    # mqtt.publish(MQTT_TOPIC_SENSOR,"hello")
+    # time.sleep(5)

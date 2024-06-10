@@ -15,15 +15,14 @@ class MQTTHelper:
 
     MQTT_TOPIC_SUB_VALVE = "/innovation/valvecontroller/station1"
     MQTT_TOPIC_SUB_PUMP = "/innovation/pumpcontroller/station1"
-    MQTT_TOPIC_AI="/innovation/valvecontroller/ai"
+    MQTT_TOPIC_SUB_SCHEDULELIST="/innovation/valvecontroller/schedulelist1"
     recvCallBack = None
 
     def mqtt_connected(self, client, userdata, flags, rc):
         print("Connected succesfully!!")
-       
-        # client.subscribe(self.MQTT_TOPIC_AI)
         client.subscribe(self.MQTT_TOPIC_SUB_VALVE)
         client.subscribe(self.MQTT_TOPIC_SUB_PUMP)
+        client.subscribe(self.MQTT_TOPIC_SUB_SCHEDULELIST)
 
 
         
@@ -32,7 +31,6 @@ class MQTTHelper:
 
 
     def mqtt_recv_message(self, client, userdata, message):
-        # print("Received: ", message.payload.decode("utf-8"))
         self.recvCallBack(message)
 
     def __init__(self):
