@@ -20,16 +20,11 @@ class MQTTHelper:
 
     def mqtt_connected(self, client, userdata, flags, rc):
         print("Connected succesfully!!")
-        # client.subscribe(self.MQTT_TOPIC_SUB_SOIL)
-        # client.subscribe(self.MQTT_TOPIC_SUB_WATER)
-        # client.subscribe(self.MQTT_TOPIC_SUB_AIR)
-        # client.subscribe(self.MQTT_TOPIC_SMART_HOME)
+       
+        # client.subscribe(self.MQTT_TOPIC_AI)
+        client.subscribe(self.MQTT_TOPIC_SUB_VALVE)
+        client.subscribe(self.MQTT_TOPIC_SUB_PUMP)
 
-        #client.subscribe(self.MQTT_TOPIC_SERVER)
-
-        client.subscribe(self.MQTT_TOPIC_AI)
-
-        #client.subscribe(self.MQTT_TOPIC_SUB_PUMP)
 
         
     def mqtt_subscribed(self, client, userdata, mid, granted_qos):
@@ -37,8 +32,8 @@ class MQTTHelper:
 
 
     def mqtt_recv_message(self, client, userdata, message):
-        print("Received: ", message.payload.decode("utf-8"))
-        self.recvCallBack(message.payload.decode("utf-8"))
+        # print("Received: ", message.payload.decode("utf-8"))
+        self.recvCallBack(message)
 
     def __init__(self):
 
