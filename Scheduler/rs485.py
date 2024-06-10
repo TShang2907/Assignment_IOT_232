@@ -16,8 +16,8 @@ def getPort():
     return commPort
     # return "/dev/ttyUSB1"
 
-portName = "/dev/ttyUSB0"
-print(getPort())
+portName = "/dev/ttyUSB1"
+print(portName)
 
 
 
@@ -33,28 +33,6 @@ except:
 relay1_ON  = [1, 6, 0, 0, 0, 255, 201, 138]
 relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
 
-relay2_ON  = [2, 6, 0, 0, 0, 255, 201, 185]
-relay2_OFF = [2, 6, 0, 0, 0, 0, 137, 249]
-
-relay3_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
-relay3_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
-
-relay4_ON  = [4, 6, 0, 0, 0, 255, 201, 223]
-relay4_OFF = [4, 6, 0, 0, 0, 0, 137, 159]
-
-relay5_ON  = [5, 6, 0, 0, 0, 255, 200, 14]
-relay5_OFF = [5, 6, 0, 0, 0, 0, 136, 78]
-
-relay6_ON  = [6, 6, 0, 0, 0, 255, 200, 61]
-relay6_OFF = [6, 6, 0, 0, 0, 0, 136, 125]
-
-relay7_ON  = [7, 6, 0, 0, 0, 255, 201, 236]
-relay7_OFF = [7, 6, 0, 0, 0, 0, 137, 172]
-
-relay8_ON  = [8, 6, 0, 0, 0, 255, 201, 19]
-relay8_OFF = [8, 6, 0, 0, 0, 0, 137, 83]
-
-
 def setDevice1(state):
     if state == True:
         ser.write(relay1_ON)
@@ -62,6 +40,12 @@ def setDevice1(state):
         ser.write(relay1_OFF)
     time.sleep(1)
     print(serial_read_data(ser))
+
+# while True:
+#     setDevice1(True)
+#     time.sleep(2)
+#     setDevice1(False)
+#     time.sleep(2)
 
 
 def serial_read_data(ser):
@@ -76,7 +60,6 @@ def serial_read_data(ser):
             return value
         else:
             return -1
-    
     return 0
 
 soil_temperature =[1, 3, 0, 6, 0, 1, 100, 11]
@@ -94,12 +77,13 @@ def readMoisture():
     return serial_read_data(ser)
 
 while True:
-    print("TEST SENSOR")
-    print(readMoisture())
-    time.sleep(2)
-    print(readTemperature())
-    time.sleep(2)
-    # setDevice1(True)
-    # time.sleep(5)
-    # setDevice1(False)
-    # time.sleep(5)
+    # print("TEST SENSOR")
+    # print(readMoisture())
+    # time.sleep(3)
+    # print(readTemperature())
+    # time.sleep(3)
+
+    setDevice1(True)
+    time.sleep(3)
+    setDevice1(False)
+    time.sleep(3)
