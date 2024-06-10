@@ -4,16 +4,19 @@ import time
 import serial as serial
 import json
 
-# try:
-#     ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-# except:
-#     print("Modbus485**","Failed to write data")
-# m485 = Modbus485(ser)
+try:
+    ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+except:
+    print("Modbus485**","Failed to write data")
+m485 = Modbus485(ser)
 
 relay_ON=[[1, 6, 0, 0, 0, 255, 201, 138],[2, 6, 0, 0, 0, 255, 201, 185],[3, 6, 0, 0, 0, 255, 200, 104],[4, 6, 0, 0, 0, 255, 201, 223],[5, 6, 0, 0, 0, 255, 200, 14],
           [6, 6, 0, 0, 0, 255, 200, 61],[7, 6, 0, 0, 0, 255, 201, 236],[8, 6, 0, 0, 0, 255, 201, 19]]
 relay_OFF=[[1, 6, 0, 0, 0, 0, 137, 202],[2, 6, 0, 0, 0, 0, 137, 249],[3, 6, 0, 0, 0, 0, 136, 40],[4, 6, 0, 0, 0, 0, 137, 159],
            [5, 6, 0, 0, 0, 0, 136, 78],[6, 6, 0, 0, 0, 0, 136, 125],[7, 6, 0, 0, 0, 0, 137, 172],[8, 6, 0, 0, 0, 0, 137, 83]]
+
+valve_value=[0,0,0]
+pump_value=[0,0,0,0,0,]
 
 relay1_ON  = [1, 6, 0, 0, 0, 255, 201, 138]
 relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
@@ -51,32 +54,37 @@ def receive_callback(message):
     if message.topic=="/innovation/valvecontroller/station1":
         index=0
         for sensor in json_data["sensors"]:
-            if sensor["sensor_value"]==1 :
-                print("Relay Valve ON\n")
-                
-                # m485.modbus485_send(relay_ON[index])
-                # time.sleep(1)
-                # m485.modbus485_read_adc()
-            else :
-                 print("Relay Valve OFF\n")
-                # m485.modbus485_send(relay_OFF[index])
-                # time.sleep(1)
-                # m485.modbus485_read_adc()
+            if valve_value[index] !=sensor["sensor_value"]:
+                if sensor["sensor_value"]==1 :
+                    print("Relay Valve ",index+1)
+                    print("ON")
+                    m485.modbus485_send(relay_ON[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
+                else :
+                    print("Relay Valve ",index+1)
+                    print("OFF")
+                    m485.modbus485_send(relay_OFF[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
             index=index+1
         
     if message.topic=="/innovation/pumpcontroller/station1":
         index=3
         for sensor in json_data["sensors"]:
-            if sensor["sensor_value"]==1 :
-                 print("Relay Pump ON\n")
-                # m485.modbus485_send(relay_ON[index])
-                # time.sleep(1)
-                # m485.modbus485_read_adc()
-            else :
-                 print("Relay Pump OFF\n")
-                # m485.modbus485_send(relay_OFF[index])
-                # time.sleep(1)
-                # m485.modbus485_read_adc()
+            if pump_value[index-3] !=sensor["sensor_value"]:
+                if sensor["sensor_value"]==1 :
+                    print("Relay Pump ",index-3)
+                    print(" ON")
+                    m485.modbus485_send(relay_ON[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
+                else :
+                    print("Relay Pump ",index-3)
+                    print(" OFF")
+                    m485.modbus485_send(relay_OFF[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
             index=index+1
 
 # Gọi phương thức setRecvCallBack để gán hàm xử lý cho việc nhận thông điệp
