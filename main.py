@@ -78,7 +78,6 @@ schedulelist = {
 
 
 def Task_Run_Watering(index,area):
-    print("Bắt đầu tưới")
     print("Mở van dung dịch 1")
     m485.modbus485_send(relay_ON[0])
     time.sleep(1)

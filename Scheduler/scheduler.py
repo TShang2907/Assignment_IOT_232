@@ -41,6 +41,7 @@ class Scheduler:
             if self.SCH_tasks_G[i].RunMe > 0:
                 self.SCH_tasks_G[i].RunMe -= 1
                 print("Phân khu ",self.SCH_tasks_G[i].Area)
+                print("\n")
                 self.SCH_tasks_G[i].pTask(i,self.SCH_tasks_G[i].Area)
                 print("Kết thúc lịch tưới")
 
