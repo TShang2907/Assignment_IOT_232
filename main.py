@@ -6,12 +6,12 @@ import json
 from Scheduler.scheduler import  *
 from datetime import datetime,timedelta
 
-#RS485
-# try:
-#     ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-# except:
-#     print("Modbus485**","Failed to write data")
-# m485 = Modbus485(ser)
+RS485
+try:
+    ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+except:
+    print("Modbus485**","Failed to write data")
+m485 = Modbus485(ser)
 
 relay_ON=[[1, 6, 0, 0, 0, 255, 201, 138],[2, 6, 0, 0, 0, 255, 201, 185],[3, 6, 0, 0, 0, 255, 200, 104],[4, 6, 0, 0, 0, 255, 201, 223],[5, 6, 0, 0, 0, 255, 200, 14],
           [6, 6, 0, 0, 0, 255, 200, 61],[7, 6, 0, 0, 0, 255, 201, 236],[8, 6, 0, 0, 0, 255, 201, 19]]
@@ -77,20 +77,68 @@ schedulelist = {
   }
 
 
-def Task_Run_Watering(index):
+def Task_Run_Watering(index,area):
     print("Bắt đầu tưới")
-    print("Trộn dung dịch 1")
+    print("Mở van dung dịch 1")
+    m485.modbus485_send(relay_ON[0])
     time.sleep(1)
-    print("Trộn dung dịch 2")
+    m485.modbus485_read_adc()
     time.sleep(1)
-    print("Trộn dung dịch 3")
+    print("Đóng van dung dịch 1")
+    m485.modbus485_send(relay_OFF[0])
     time.sleep(1)
-    print("Máy bơm vào bật")
+    m485.modbus485_read_adc()
+
+    print("Mở van dung dịch 2")
+    m485.modbus485_send(relay_ON[1])
+    time.sleep(1)
+    m485.modbus485_read_adc()
+    time.sleep(1)
+    print("Đóng van dung dịch 2")
+    m485.modbus485_send(relay_OFF[1])
+    time.sleep(1)
+    m485.modbus485_read_adc()
+
+    print("Mở van dung dịch 3")
+    m485.modbus485_send(relay_ON[2])
+    time.sleep(1)
+    m485.modbus485_read_adc()    
+    time.sleep(1)
+    print("Đóng van dung dịch 3")
+    m485.modbus485_send(relay_OFF[2])
+    time.sleep(1)
+    m485.modbus485_read_adc()
+
+    print("Mở van phân khu",area)
+    m485.modbus485_send(relay_ON[area+2])
+    time.sleep(1)
+    m485.modbus485_read_adc()    
+    time.sleep(1)
+    print("Đóng van phân khu",area)
+    m485.modbus485_send(relay_OFF[area+2])
+    time.sleep(1)
+    m485.modbus485_read_adc()
+
+    print("Mở máy bơm vào")
+    m485.modbus485_send(relay_ON[6])
+    time.sleep(1)
+    m485.modbus485_read_adc()    
     time.sleep(3)
-    print("Máy bơm vào tăt")
-    print("Máy bơm ra bật")
+    print("Đóng máy bơm vào")
+    m485.modbus485_send(relay_OFF[6])
+    time.sleep(1)
+    m485.modbus485_read_adc()
+
+    print("Mở máy bơm ra")
+    m485.modbus485_send(relay_ON[7])
+    time.sleep(1)
+    m485.modbus485_read_adc()    
     time.sleep(3)
-    print("Máy bơm ra tăt")
+    print("Đóng máy bơm ra")
+    m485.modbus485_send(relay_OFF[7])
+    time.sleep(1)
+    m485.modbus485_read_adc()    
+
     schedulelist["schedule_list"][index]["status"]="DONE"
     mqtt.publish(MQTT_TOPIC_SUB_SCHEDULELIST,json.dumps(schedulelist))
 
@@ -108,15 +156,15 @@ def receive_callback(message):
                 if sensor["sensor_value"]==1 :
                     print("Relay Valve ",index+1)
                     print("ON")
-                    # m485.modbus485_send(relay_ON[index])
-                    # time.sleep(1)
-                    # m485.modbus485_read_adc()
+                    m485.modbus485_send(relay_ON[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
                 else :
                     print("Relay Valve ",index+1)
                     print("OFF")
-                    # m485.modbus485_send(relay_OFF[index])
-                    # time.sleep(1)
-                    # m485.modbus485_read_adc()
+                    m485.modbus485_send(relay_OFF[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
                 valve_value[index]=sensor["sensor_value"]
             index=index+1
 
@@ -128,15 +176,15 @@ def receive_callback(message):
                 if sensor["sensor_value"]==1 :
                     print("Relay Pump ",index-3)
                     print(" ON")
-                    # m485.modbus485_send(relay_ON[index])
-                    # time.sleep(1)
-                    # m485.modbus485_read_adc()
+                    m485.modbus485_send(relay_ON[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
                 else :
                     print("Relay Pump ",index-3)
                     print(" OFF")
-                    # m485.modbus485_send(relay_OFF[index])
-                    # time.sleep(1)
-                    # m485.modbus485_read_adc()
+                    m485.modbus485_send(relay_OFF[index])
+                    time.sleep(1)
+                    m485.modbus485_read_adc()
                 pump_value[index-3]=sensor["sensor_value"]
             index=index+1
 
